@@ -14,8 +14,8 @@ image:
   pullPolicy: Always
 
 initImage:
-  repository: 651017398184.dkr.ecr.us-east-2.amazonaws.com/superset-ug
-  tag: latest
+  repository: apache/superset
+  tag: dockerize
   pullPolicy: Always
 
 # supersetNode:

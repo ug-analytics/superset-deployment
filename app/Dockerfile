@@ -1,12 +1,10 @@
-FROM apache/superset:dockerize
+FROM apache/superset:latest
 USER root
-
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     python3-dev \
-    py3-pip \
-    build-base \
-    pkgconf \
-    postgresql-dev
+    build-essential \
+    pkg-config
 
 COPY ./requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN pip list
