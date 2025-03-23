@@ -35,6 +35,6 @@ phases:
       - helm repo add superset https://apache.github.io/superset
       - helm repo update
       - aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME --role-arn arn:aws:iam::651017398184:role/userguiding-new-sandbox-master-role
-      - helm upgrade -i $NAMESPACE-deployment apache-airflow/airflow -f ./kubernetes/staging/helm-override-values.yaml --set deploy.tag=$CODEBUILD_BUILD_NUMBER -n $NAMESPACE
+      - helm upgrade -i $NAMESPACE-deployment apache/superset -f ./staging/values.yaml --set deploy.tag=$CODEBUILD_BUILD_NUMBER -n $NAMESPACE
 
 
