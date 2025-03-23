@@ -1,0 +1,40 @@
+version: 0.2
+env:
+  parameter-store:
+    CLUSTER_NAME: "CLUSTER_NAME"
+    HELM_PATH: "HELM_PATH"
+    ECR_REGISTRY: "ECR_REGISTRY"
+    ECR_IMAGE_NAME: "ECR_IMAGE_NAME"
+    NAMESPACE: "NAMESPACE"
+    ENVIRON: "ENVIRON"
+phases:
+  install:
+    commands: 
+      - ls -al
+      - wget -q https://get.helm.sh/helm-v3.6.2-linux-amd64.tar.gz -O helm.tar.gz
+      - tar -xzf helm.tar.gz
+      - chmod +x ./linux-amd64/helm
+      - mv ./linux-amd64/helm /usr/local/bin/helm
+    finally:
+      - ls -la
+  pre_build: 
+    commands:
+      - echo $AWS_REGION
+      - echo $CLUSTER_NAME
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+  build: 
+    commands:
+      # TODO: [DENG-105] clean existing images in the registry?
+      # TODO: [DENG-106] pulling previos version of the image from the registry might optimize?
+      - docker build --pull --tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER ./app/.
+    finally:
+      - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER
+      - docker tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
+      - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
+      # TODO: all deployment steps can be moved to here, instead of staging-prepare-eks.sh, with appropriate triggering mechanism.
+      - helm repo add superset https://apache.github.io/superset
+      - helm repo update
+      - aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME --role-arn arn:aws:iam::651017398184:role/userguiding-new-sandbox-master-role
+      - helm upgrade -i $NAMESPACE-deployment apache-airflow/airflow -f ./kubernetes/staging/helm-override-values.yaml --set deploy.tag=$CODEBUILD_BUILD_NUMBER -n $NAMESPACE
+
+

@@ -1,8 +1,27 @@
-postgresql: false
-supersetNode:
-  connections:
-    db_host: "{{ .Release.Name }}-postgresql"
-    db_port: "5432"
-    db_user: superset
-    db_pass: superset
-    db_name: superset
+postgresql:
+  enabled: true
+  primary:
+    persistence: 
+      enabled: false
+
+configOverrides:
+  secret: |
+    SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
+
+image:
+  repository: apache/superset
+  tag: ~
+  pullPolicy: Always
+
+initImage:
+  repository: apache/superset
+  tag: dockerize
+  pullPolicy: Always
+
+# supersetNode:
+#   connections:
+#     db_host: userguiding-sandbox.c1somsjlvjib.us-east-2.rds.amazonaws.com
+#     db_port: 5432
+#     db_user: postgres
+#     db_pass: N2qKh3FLLNYc66rY
+#     db_name: superset
