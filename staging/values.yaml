@@ -15,7 +15,7 @@ image:
 
 initImage:
   repository: 651017398184.dkr.ecr.us-east-2.amazonaws.com/superset-ug
-  tag: dockerize
+  tag: latest
   pullPolicy: Always
 
 # supersetNode:

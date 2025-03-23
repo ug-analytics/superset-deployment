@@ -26,11 +26,10 @@ phases:
     commands:
       # TODO: [DENG-105] clean existing images in the registry?
       # TODO: [DENG-106] pulling previos version of the image from the registry might optimize?
-      # - docker build --pull --tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER ./app/.
+      - docker build --pull --tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER ./app/.
     finally:
-      # - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER
-      # - docker tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
-      # - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
+      - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER
+      - docker tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
       # TODO: all deployment steps can be moved to here, instead of staging-prepare-eks.sh, with appropriate triggering mechanism.
       - helm repo add superset https://apache.github.io/superset
       - helm repo update
