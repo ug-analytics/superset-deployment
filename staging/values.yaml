@@ -9,12 +9,12 @@ configOverrides:
     SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
 
 image:
-  repository: apache/superset
+  repository: 651017398184.dkr.ecr.us-east-2.amazonaws.com/superset-ug
   tag: ~
   pullPolicy: Always
 
 initImage:
-  repository: apache/superset
+  repository: 651017398184.dkr.ecr.us-east-2.amazonaws.com/superset-ug
   tag: dockerize
   pullPolicy: Always
 
