@@ -26,6 +26,6 @@ spec:
           service:
             name: superset
             port:
-              name: superset-ui
+              name: http
         path: /
         pathType: Prefix
