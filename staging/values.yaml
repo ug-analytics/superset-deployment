@@ -1,8 +1,8 @@
 postgresql:
-  enabled: true
-  primary:
-    persistence: 
-      enabled: false
+  enabled: false
+  # primary:
+  #   persistence: 
+  #     enabled: false
 
 configOverrides:
   secret: |
@@ -18,10 +18,10 @@ initImage:
   tag: dockerize
   pullPolicy: Always
 
-# supersetNode:
-#   connections:
-#     db_host: userguiding-sandbox.c1somsjlvjib.us-east-2.rds.amazonaws.com
-#     db_port: 5432
-#     db_user: postgres
-#     db_pass: N2qKh3FLLNYc66rY
-#     db_name: superset
+supersetNode:
+  connections:
+    db_host: userguiding-sandbox.c1somsjlvjib.us-east-2.rds.amazonaws.com
+    db_port: 5432
+    db_user: postgres
+    db_pass: N2qKh3FLLNYc66rY
+    db_name: superset
