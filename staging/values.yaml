@@ -10,7 +10,7 @@ configOverrides:
 
 image:
   repository: 651017398184.dkr.ecr.us-east-2.amazonaws.com/superset-ug
-  tag: ~
+  tag: latest
   pullPolicy: Always
 
 initImage:

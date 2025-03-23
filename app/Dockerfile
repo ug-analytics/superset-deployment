@@ -1,11 +1,12 @@
-# Extend over the airflow base image
 FROM apache/superset:dockerize
 USER root
-RUN apt-get update && apt-get install -y \
+
+RUN apk update && apk add --no-cache \
     python3-dev \
-    build-essential \
-    pkg-config
+    py3-pip \
+    build-base \
+    pkgconf \
+    postgresql-dev
 
 COPY ./requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
-RUN pip list
+RUN pip install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
