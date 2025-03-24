@@ -14,16 +14,16 @@ image:
 supersetCeleryBeat:
   enabled: true
   nodeSelector:
-    nodegroup: superset-backend
+   eks.amazonaws.com/nodegroup: superset-staging-nodes
 
 redis:
   nodeSelector:
-    nodegroup: superset-backend
+    eks.amazonaws.com/nodegroup: superset-staging-nodes
 
 
 supersetWorker:
   nodeSelector:
-    nodegroup: superset-backend
+    eks.amazonaws.com/nodegroup: superset-staging-nodes
 
 supersetNode:
   connections:
@@ -33,4 +33,4 @@ supersetNode:
     db_pass: N2qKh3FLLNYc66rY
     db_name: superset
   nodeSelector:
-    nodegroup: superset-webserver
+    eks.amazonaws.com/nodegroup: superset-staging-webserver-nodes
