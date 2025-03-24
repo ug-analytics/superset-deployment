@@ -1,8 +1,5 @@
 postgresql:
   enabled: false
-  # primary:
-  #   persistence: 
-  #     enabled: false
 
 configOverrides:
   secret: |
@@ -13,10 +10,20 @@ image:
   tag: latest
   pullPolicy: Always
 
-initImage:
-  repository: apache/superset
-  tag: dockerize
-  pullPolicy: Always
+
+supersetCeleryBeat:
+  enabled: true
+  nodeSelector:
+    nodegroup: superset-backend
+
+redis:
+  nodeSelector:
+    nodegroup: superset-backend
+
+
+supersetWorker:
+  nodeSelector:
+    nodegroup: superset-backend
 
 supersetNode:
   connections:
@@ -25,3 +32,5 @@ supersetNode:
     db_user: postgres
     db_pass: N2qKh3FLLNYc66rY
     db_name: superset
+  nodeSelector:
+    nodegroup: superset-webserver
