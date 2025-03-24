@@ -20,6 +20,3 @@ supersetNode:
     db_user: postgres
     db_pass: N2qKh3FLLNYc66rY
     db_name: superset
-
-nodeSelector:
-  eks.amazonaws.com/nodegroup: superset-nodes
