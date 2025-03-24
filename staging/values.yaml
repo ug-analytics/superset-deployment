@@ -1,6 +1,9 @@
 postgresql:
   enabled: false
 
+supersetCeleryBeat:
+  enabled: true
+
 configOverrides:
   secret: |
     SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
@@ -10,21 +13,6 @@ image:
   tag: latest
   pullPolicy: Always
 
-
-supersetCeleryBeat:
-  enabled: true
-  nodeSelector:
-   eks.amazonaws.com/nodegroup: superset-staging-nodes
-
-redis:
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: superset-staging-nodes
-
-
-supersetWorker:
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: superset-staging-nodes
-
 supersetNode:
   connections:
     db_host: userguiding-sandbox.c1somsjlvjib.us-east-2.rds.amazonaws.com
@@ -32,5 +20,6 @@ supersetNode:
     db_user: postgres
     db_pass: N2qKh3FLLNYc66rY
     db_name: superset
-  nodeSelector:
-    eks.amazonaws.com/nodegroup: superset-staging-webserver-nodes
+
+nodeSelector:
+  eks.amazonaws.com/nodegroup: superset-staging-nodes
