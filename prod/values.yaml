@@ -1,0 +1,19 @@
+postgresql:
+  enabled: false
+
+configOverrides:
+  secret: |
+    SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
+
+image:
+  repository: 728785663016.dkr.ecr.us-east-2.amazonaws.com/superset-ug
+  tag: latest
+  pullPolicy: Always
+
+supersetNode:
+  connections:
+    db_host: prod-userguiding-psql-api.cbwgvwp9mbdx.us-east-2.rds.amazonaws.com:5432/airflow-prod
+    db_port: 5432
+    db_user: postgres
+    db_pass: K4845yKFzugTAyndTq
+    db_name: superset
