@@ -22,4 +22,4 @@ supersetNode:
     db_name: superset
 
 nodeSelector:
-  eks.amazonaws.com/nodegroup: superset-staging-nodes
+  eks.amazonaws.com/nodegroup: superset-nodes
