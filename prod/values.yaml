@@ -15,7 +15,7 @@ image:
 
 supersetNode:
   connections:
-    db_host: prod-userguiding-psql-api.cbwgvwp9mbdx.us-east-2.rds.amazonaws.com:5432/airflow-prod
+    db_host: prod-userguiding-psql-api.cbwgvwp9mbdx.us-east-2.rds.amazonaws.com
     db_port: 5432
     db_user: postgres
     db_pass: K4845yKFzugTAyndTq
