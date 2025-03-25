@@ -1,6 +1,9 @@
 postgresql:
   enabled: false
 
+supersetCeleryBeat:
+  enabled: true
+
 configOverrides:
   secret: |
     SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
@@ -17,3 +20,6 @@ supersetNode:
     db_user: postgres
     db_pass: K4845yKFzugTAyndTq
     db_name: superset
+
+nodeSelector:
+  eks.amazonaws.com/nodegroup: superset-nodes
