@@ -2,24 +2,25 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    alb.ingress.kubernetes.io/group.name: superset-internal
+    alb.ingress.kubernetes.io/group.name: superset-internet-facing
     alb.ingress.kubernetes.io/healthcheck-path: /
-    alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
+    alb.ingress.kubernetes.io/inbound-cidrs: 173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=3601
-    alb.ingress.kubernetes.io/load-balancer-name: superset-internal
-    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/load-balancer-name: superset-internet-facing
+    alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/success-codes: 200-404
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/conditions.superset: '[{"Field":"host-header","HostHeaderConfig":{"Values":["*superset.userguiding.com"]}}]'
     ingress.kubernetes.io/rewrite-target: /
     meta.helm.sh/release-name: superset-deployment
     meta.helm.sh/release-namespace: superset
-  name: superset-deployment-ingress
+  name: superset-public-ingress
   namespace: superset
 spec:
   ingressClassName: alb
   rules:
-    - host: userguiding.superset.staging
+    - host: staging-superset.userguiding.com
       http:
         paths:
           - backend:
