@@ -22,5 +22,5 @@ supersetNode:
     db_name: superset
 
 nodeSelector:
-  superset-platform: true
-  superset-workers: true
+  superset-platform: "true"
+  superset-workers: "true"
