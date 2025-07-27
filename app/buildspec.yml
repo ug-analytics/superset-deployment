@@ -39,4 +39,3 @@ phases:
       - aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME --role-arn $ROLE_ARN
       - kubectl get ns $NAMESPACE || kubectl create ns $NAMESPACE
       - helm upgrade -i $NAMESPACE superset/superset -f ./$ENVIRON/values.yaml --set image.tag=$TAG_VERSION -n $NAMESPACE
-      - kubectl apply -f ./$ENVIRON/ingress.yaml

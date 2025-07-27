@@ -19,13 +19,13 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: userguiding.superset.staging
-    http:
-      paths:
-      - backend:
-          service:
-            name: superset
-            port:
-              name: http
-        path: /
-        pathType: Prefix
+    - host: userguiding.superset.staging
+      http:
+        paths:
+          - backend:
+              service:
+                name: superset
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
