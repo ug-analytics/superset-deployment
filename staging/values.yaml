@@ -11,11 +11,6 @@ envFromSecrets:
   - '{{ template "superset.fullname" . }}-env' # existing default secret
   - superset-oauth-secret
 
-bootstrapScript: |
-  #!/bin/bash
-  uv pip install .[Authlib] &&\
-  if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
-
 configOverrides:
   secret: |
     SECRET_KEY = 'j3iyk1bldRa86wkaf0R15rgoCnuaWFFw2Y1AdGCYGOhs4vkckjZXWVbM'
