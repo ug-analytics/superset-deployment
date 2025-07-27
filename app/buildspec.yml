@@ -7,9 +7,12 @@ env:
     ECR_IMAGE_NAME: "ECR_IMAGE_NAME"
     NAMESPACE: "NAMESPACE"
     ENVIRON: "ENVIRON"
+    ROLE_ARN: "ROLE_ARN"
+  variables:
+    TAG_PREFIX: "build_version_"
 phases:
   install:
-    commands: 
+    commands:
       - ls -al
       - wget -q https://get.helm.sh/helm-v3.6.2-linux-amd64.tar.gz -O helm.tar.gz
       - tar -xzf helm.tar.gz
@@ -17,25 +20,23 @@ phases:
       - mv ./linux-amd64/helm /usr/local/bin/helm
     finally:
       - ls -la
-  pre_build: 
+  pre_build:
     commands:
       - echo $AWS_REGION
       - echo $CLUSTER_NAME
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
-  build: 
+      - TAG_VERSION="${TAG_PREFIX}${CODEBUILD_BUILD_NUMBER}"
+      - echo $TAG_VERSION
+  build:
     commands:
-      # TODO: [DENG-105] clean existing images in the registry?
-      # TODO: [DENG-106] pulling previos version of the image from the registry might optimize?
-      - docker build --pull --tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER ./app/.
+      - docker build --pull --tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$TAG_VERSION ./app/.
     finally:
-      - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER
-      - docker tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$CODEBUILD_BUILD_NUMBER $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
+      - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:$TAG_VERSION
+      - docker tag $ECR_REGISTRY/$ECR_IMAGE_NAME:$TAG_VERSION $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
       - docker push $ECR_REGISTRY/$ECR_IMAGE_NAME:latest
       - helm repo add superset https://apache.github.io/superset
       - helm repo update
-      - aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME --role-arn arn:aws:iam::728785663016:role/userguiding-production-master-role
+      - aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME --role-arn $ROLE_ARN
       - kubectl get ns $NAMESPACE || kubectl create ns $NAMESPACE
-      - helm upgrade -i $NAMESPACE superset/superset -f ./$ENVIRON/values.yaml --set deploy.tag=$CODEBUILD_BUILD_NUMBER -n $NAMESPACE
+      - helm upgrade -i $NAMESPACE superset/superset -f ./$ENVIRON/values.yaml --set image.tag=$TAG_VERSION -n $NAMESPACE
       - kubectl apply -f ./$ENVIRON/ingress.yaml
-
-
