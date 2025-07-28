@@ -6,6 +6,7 @@ supersetCeleryBeat:
 
 extraEnv:
   AUTH_DOMAIN: userguiding.com
+  PREFERRED_URL_SCHEME: https
 
 envFromSecrets:
   - '{{ template "superset.fullname" . }}-env' # existing default secret
