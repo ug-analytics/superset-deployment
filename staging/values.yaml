@@ -6,7 +6,6 @@ supersetCeleryBeat:
 
 extraEnv:
   AUTH_DOMAIN: userguiding.com
-  PREFERRED_URL_SCHEME: https
 
 envFromSecrets:
   - '{{ template "superset.fullname" . }}-env' # existing default secret
@@ -36,6 +35,7 @@ configOverrides:
                 "authorize_url": "https://accounts.google.com/o/oauth2/auth",
                 "authorize_params": {"hd": os.getenv("AUTH_DOMAIN", "")}
             },
+            "redirect_uri": "https://staging-superset.userguiding.com/oauth-authorized/google",
         }
     ]
 
