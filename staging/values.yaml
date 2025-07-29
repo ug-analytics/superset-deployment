@@ -37,7 +37,6 @@ configOverrides:
                 "authorize_url": "https://accounts.google.com/o/oauth2/auth",
                 "authorize_params": {"hd": os.getenv("AUTH_DOMAIN", "")}
             },
-            "redirect_uri": "https://staging-superset.userguiding.com/oauth-authorized/google",
         }
     ]
 
