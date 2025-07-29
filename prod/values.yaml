@@ -37,6 +37,7 @@ configOverrides:
                 "authorize_url": "https://accounts.google.com/o/oauth2/auth",
                 "authorize_params": {"hd": os.getenv("AUTH_DOMAIN", "")}
             },
+            "redirect_uri": "https://staging-superset.userguiding.com/oauth-authorized/google",
         }
     ]
 
@@ -48,7 +49,12 @@ configOverrides:
     AUTH_USER_REGISTRATION = True
 
     # The default user self registration role
-    AUTH_USER_REGISTRATION_ROLE = "Admin"
+    AUTH_USER_REGISTRATION_ROLE = "Empty"
+
+  feature_flags: |
+    FEATURE_FLAGS = {
+        "DASHBOARD_RBAC": True
+    }
 
 image:
   repository: 728785663016.dkr.ecr.us-east-2.amazonaws.com/superset-ug
