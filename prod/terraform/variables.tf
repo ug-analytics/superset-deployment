@@ -29,9 +29,12 @@ variable "subnet_ids" {
   description = "List of subnet IDs for the EKS node group"
   type        = list(string)
   default = [
-    "subnet-0b85d9141e82e0c24",
-    "subnet-037fc763d18fdfcda",
-    "subnet-0dce9603136bb5be6"
+    "subnet-0b85d9141e82e0c24", # userguiding-prod-prod-1a-containers
+    "subnet-037fc763d18fdfcda", # userguiding-prod-prod-1b-containers
+    "subnet-0dce9603136bb5be6", # userguiding-prod-prod-1c-containers
+    "subnet-07c42530cf8a8c361", # userguiding-prod-prod-1a-private-generic
+    "subnet-08f4d06ee40db6005", # userguiding-prod-prod-1b-private-generic
+    "subnet-001f59233da896027"  # userguiding-prod-prod-1c-private-generic
   ]
 }
 
