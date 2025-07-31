@@ -14,6 +14,8 @@ metadata:
       idle_timeout.timeout_seconds=3601,
       routing.http2.enabled=true,
     alb.ingress.kubernetes.io/load-balancer-name: superset-internet-facing
+    alb.ingress.kubernetes.io/actions.robots-txt: >
+      {"Type":"fixed-response","FixedResponseConfig":{"ContentType":"text/plain","StatusCode":"200","MessageBody":"User-agent: *\nDisallow: /"}}
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/success-codes: 200-404
     alb.ingress.kubernetes.io/target-type: ip
@@ -29,6 +31,13 @@ spec:
     - host: superset.userguiding.com
       http:
         paths:
+          - path: /robots.txt
+            pathType: Prefix
+            backend:
+              service:
+                name: robots-txt
+                port:
+                  name: use-annotation
           - backend:
               service:
                 name: ssl-redirect
